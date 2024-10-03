@@ -1,0 +1,29 @@
+name: telegram message
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Read file content
+        run: |
+          {
+            echo 'FILE_CONTENT<<EOF'
+            more link.txt
+            echo EOF
+          } >> "$GITHUB_ENV"
+      - name: send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: ${{ env.FILE_CONTENT }}
+      - name: send 2nd telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM2_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: ${{ env.FILE_CONTENT }}
+
