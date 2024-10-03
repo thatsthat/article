@@ -19,7 +19,7 @@ jobs:
           crate: htmlq
       - name: do the scraping
         run: |
-          curl -s "https://www.elpuntavui.cat/opinio/el-voraviu.html" | htmlq -p ".num-1 > .article > .article-content > .epanoticies-title" -a href a | echo "https://www.elpuntavui.cat$(cat -)" | curl -s $(cat -) | htmlq -t '.article-titol, .subtitol, [itemprop="articleBody"]'; | sed "s/^[ \t]*//" > link.txt'
+          curl -s "https://www.elpuntavui.cat/opinio/el-voraviu.html" | htmlq -p ".num-1 > .article > .article-content > .epanoticies-title" -a href a | echo "https://www.elpuntavui.cat$(cat -)" | curl -s $(cat -) | htmlq -t '.article-titol, .subtitol, [itemprop="articleBody"]' | sed "s/^[ \t]*//" > link.txt'
       - name: commit results
         run: |
           git config user.name "github-actions[bot]"
